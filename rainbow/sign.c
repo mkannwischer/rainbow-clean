@@ -27,13 +27,13 @@ PQCLEAN_NAMESPACE_crypto_sign_keypair(unsigned char *pk, unsigned char *sk) {
 
     unsigned char pk_seed[LEN_PKSEED] = {0};
     randombytes( pk_seed, LEN_PKSEED );
-    generate_keypair_cyclic( (cpk_t *) pk, (sk_t *) sk, pk_seed, sk_seed );
+    PQCLEAN_NAMESPACE_generate_keypair_cyclic( (cpk_t *) pk, (sk_t *) sk, pk_seed, sk_seed );
 
     #elif defined _RAINBOW_CYCLIC_COMPRESSED
 
     unsigned char pk_seed[LEN_PKSEED] = {0};
     randombytes( pk_seed, LEN_PKSEED );
-    generate_compact_keypair_cyclic( (cpk_t *) pk, (csk_t *) sk, pk_seed, sk_seed );
+    PQCLEAN_NAMESPACE_generate_compact_keypair_cyclic( (cpk_t *) pk, (csk_t *) sk, pk_seed, sk_seed );
 
     #else
     error here
@@ -60,11 +60,11 @@ PQCLEAN_NAMESPACE_crypto_sign(unsigned char *sm, size_t *smlen, const unsigned c
 
     #elif defined _RAINBOW_CYCLIC
 
-    return rainbow_sign( sm + mlen, (const sk_t *)sk, digest );
+    return PQCLEAN_NAMESPACE_rainbow_sign( sm + mlen, (const sk_t *)sk, digest );
 
     #elif defined _RAINBOW_CYCLIC_COMPRESSED
 
-    return rainbow_sign_cyclic( sm + mlen, (const csk_t *)sk, digest );
+    return PQCLEAN_NAMESPACE_rainbow_sign_cyclic( sm + mlen, (const csk_t *)sk, digest );
 
     #else
     error here

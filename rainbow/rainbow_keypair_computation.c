@@ -13,7 +13,7 @@
 #include <string.h>
 
 
-#if defined _RAINBOW_CLASSIC
+#if defined _RAINBOW_CYCLIC || defined _RAINBOW_CLASSIC
 void PQCLEAN_NAMESPACE_extcpk_to_pk( pk_t *pk, const ext_cpk_t *cpk ) {
     const unsigned char *idx_l1 = cpk->l1_Q1;
     const unsigned char *idx_l2 = cpk->l2_Q1;
@@ -82,7 +82,9 @@ void PQCLEAN_NAMESPACE_extcpk_to_pk( pk_t *pk, const ext_cpk_t *cpk ) {
         }
     }
 }
+#endif
 
+#if defined _RAINBOW_CLASSIC
 static
 void calculate_Q_from_F_ref( ext_cpk_t *Qs, const sk_t *Fs, const sk_t *Ts ) {
     /*

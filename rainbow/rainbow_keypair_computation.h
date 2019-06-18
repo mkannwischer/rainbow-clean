@@ -11,7 +11,7 @@
 
 #include "rainbow_keypair.h"
 
-#if defined _RAINBOW_CLASSIC
+#if defined _RAINBOW_CYCLIC || defined _RAINBOW_CLASSIC
 /// @brief The (internal use) public key for rainbow
 ///
 /// The (internal use) public key for rainbow. The public

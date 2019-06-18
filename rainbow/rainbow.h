@@ -19,9 +19,7 @@
 /// @param[in]  digest    - the digest.
 ///
 int PQCLEAN_NAMESPACE_rainbow_sign( uint8_t *signature, const sk_t *sk, const uint8_t *digest );
-#endif
 
-#ifdef _RAINBOW_CLASSIC
 ///
 /// @brief Verifying function.
 ///

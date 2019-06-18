@@ -35,3 +35,6 @@ for parameterSet in os.listdir("params"):
         cmd = f"sed -i 's/SCHEME_NAME/{parameterSet}/g' {pqcleanDir}/{f}"
         subprocess.call(cmd, shell=True)
     
+    # run astyle to fix formatting due to namespace 
+    cmd = f"astyle --project {pqcleanDir}/*.[ch]"    
+    subprocess.call(cmd, shell=True)

@@ -94,8 +94,9 @@ struct rainbow_secretkey_cyclic {
 /// @param[in]  sk_seed   - seed for generating the secret key.
 ///
 void PQCLEAN_NAMESPACE_generate_keypair( pk_t *pk, sk_t *sk, const unsigned char *sk_seed );
+#endif
 
-#elif defined _RAINBOW_CYCLIC
+#if defined _RAINBOW_CYCLIC
 ///
 /// @brief Generate key pairs for cyclic rainbow.
 ///
@@ -105,8 +106,9 @@ void PQCLEAN_NAMESPACE_generate_keypair( pk_t *pk, sk_t *sk, const unsigned char
 /// @param[in]  sk_seed   - seed for generating secret key.
 ///
 void PQCLEAN_NAMESPACE_generate_keypair_cyclic( cpk_t *pk, sk_t *sk, const unsigned char *pk_seed, const unsigned char *sk_seed );
+#endif
 
-#elif defined _RAINBOW_CYCLIC_COMPRESSED
+#if defined _RAINBOW_CYCLIC_COMPRESSED
 ///
 /// @brief Generate compressed key pairs for cyclic rainbow.
 ///
@@ -127,7 +129,9 @@ void PQCLEAN_NAMESPACE_generate_compact_keypair_cyclic( cpk_t *pk, csk_t *sk, co
 /// @param[in]  sk_seed   - seed for generating the secret key.
 ///
 void PQCLEAN_NAMESPACE_generate_secretkey_cyclic( sk_t *sk, const unsigned char *pk_seed, const unsigned char *sk_seed );
+#endif
 
+#if defined(_RAINBOW_CYCLIC) || defined(_RAINBOW_CYCLIC_COMPRESSED)
 ////////////////////////////////////
 
 ///

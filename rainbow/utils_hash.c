@@ -52,9 +52,9 @@ int expand_hash(unsigned char *digest, size_t n_digest, const unsigned char *has
 }
 
 int PQCLEAN_NAMESPACE_hash_msg(unsigned char *digest,
-        size_t len_digest,
-        const unsigned char *m,
-        size_t mlen) {
+                               size_t len_digest,
+                               const unsigned char *m,
+                               size_t mlen) {
     unsigned char buf[_HASH_LEN];
     _hash(buf, m, mlen);
     return expand_hash(digest, len_digest, buf);
