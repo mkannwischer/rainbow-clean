@@ -275,7 +275,8 @@ void calculate_Q_from_F_cyclic_ref( cpk_t *Qs, const sk_t *Fs, const sk_t *Ts ) 
     sk_t tempQ;
     memcpy( tempQ.l1_F2, Fs->l1_F2, _O1_BYTE * _V1 * _O1 );
     batch_trimat_madd( tempQ.l1_F2, Fs->l1_F1, Ts->t1, _V1, _V1_BYTE, _O1, _O1_BYTE );          // F1*T1 + F2
-    memset( tempQ.l2_F1, 0, _O1_BYTE * _V1 * _O2 );
+    memset( tempQ.l2_F1, 0, sizeof(tempQ.l2_F1));
+    memset( tempQ.l2_F2, 0, sizeof(tempQ.l2_F2)); 
     batch_matTr_madd( tempQ.l2_F1, Ts->t1, _V1, _V1_BYTE, _O1, tempQ.l1_F2, _O1, _O1_BYTE );    // T1tr*(F1*T1 + F2)
     memset( Qs->l1_Q5, 0, _O1_BYTE * N_TRIANGLE_TERMS(_O1) );
     PQCLEAN_NAMESPACE_UpperTrianglize( Qs->l1_Q5, tempQ.l2_F1, _O1, _O1_BYTE );                          // UT( ... )   // Q5
