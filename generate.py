@@ -4,11 +4,18 @@ import subprocess
 from pathlib import Path
 TARGET_FOLDER = "../PQClean/crypto_sign/"
 
-for parameterSet in os.listdir("params"):
-    print(parameterSet)
+ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW_CLASSIC',
+       '_RAINBOW_CYCLIC', '_RAINBOW_CYCLIC_COMPRESSED']
+params = [
+    {'name': 'rainbowIa-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_32_32_32', '_HASH_LEN=32']},
+    {'name': 'rainbowIa-cyclic', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
+]
+
+for param in params:
+    parameterSet = param['name']
     pqcleanDir = f"{TARGET_FOLDER}/{parameterSet}/clean/"
 
-    # delete old files    
+    # delete old files
     if Path(pqcleanDir).exists():
         shutil.rmtree(pqcleanDir)
     os.makedirs(pqcleanDir)
@@ -22,19 +29,25 @@ for parameterSet in os.listdir("params"):
         cmd = f"sed -i 's/PQCLEAN_NAMESPACE/{nmspc}/g' {pqcleanDir}/{f}"
         subprocess.call(cmd, shell=True)
 
-    # copy over param specific files 
+        # remove preprocessor conditionals
+        undefs = [x for x in ALL if x not in param['def']]
+        cmd = f"unifdef -m " + " ".join(["-D"+d for d in param['def']]) + " " + " ".join(["-U"+d for d in undefs]) +  f" {pqcleanDir}/{f}"
+        print(cmd)
+        subprocess.call(cmd, shell=True)
+
+    # copy over param specific files
     for f in os.listdir(f"params/{parameterSet}"):
         shutil.copyfile(f"params/{parameterSet}/{f}", f"{pqcleanDir}/{f}")
 
 
-    # copy over Makefiles 
+    # copy over Makefiles
     for f in os.listdir(f"make"):
         shutil.copyfile(f"make/{f}", f"{pqcleanDir}/{f}")
 
         # replace lib name
         cmd = f"sed -i 's/SCHEME_NAME/{parameterSet}/g' {pqcleanDir}/{f}"
         subprocess.call(cmd, shell=True)
-    
-    # run astyle to fix formatting due to namespace 
-    cmd = f"astyle --project {pqcleanDir}/*.[ch]"    
+
+    # run astyle to fix formatting due to namespace
+    cmd = f"astyle --project {pqcleanDir}/*.[ch]"
     subprocess.call(cmd, shell=True)

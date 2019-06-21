@@ -5,19 +5,6 @@
 /// @brief Defining the parameters of the Rainbow and the corresponding constants.
 ///
 
-
-
-// TODO: refactor this
-/// the defined parameter
-#define _RAINBOW16_32_32_32
-//#define _RAINBOW256_68_36_36
-//#define _RAINBOW256_92_48_48
-
-//#define _RAINBOW_CLASSIC
-#define _RAINBOW_CYCLIC
-//#define _RAINBOW_CYCLIC_COMPRESSED
-
-
 #if defined _RAINBOW16_32_32_32
 #define _USE_GF16
 #define _GFSIZE 16
