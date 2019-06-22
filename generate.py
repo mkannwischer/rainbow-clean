@@ -9,6 +9,7 @@ ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW_CLASSIC',
 params = [
     {'name': 'rainbowIa-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_32_32_32', '_HASH_LEN=32']},
     {'name': 'rainbowIa-cyclic', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
+    {'name': 'rainbowIa-cyclic-compressed', 'def' :['_RAINBOW_CYCLIC_COMPRESSED','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
 ]
 
 for param in params:

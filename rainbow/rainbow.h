@@ -10,7 +10,6 @@
 
 #include <stdint.h>
 
-#if defined(_RAINBOW_CLASSIC) || defined(_RAINBOW_CYCLIC)
 ///
 /// @brief Signing function for classical secret key.
 ///
@@ -29,7 +28,6 @@ int PQCLEAN_NAMESPACE_rainbow_sign( uint8_t *signature, const sk_t *sk, const ui
 /// @return 0 for successful verified. -1 for failed verification.
 ///
 int PQCLEAN_NAMESPACE_rainbow_verify( const uint8_t *digest, const uint8_t *signature, const pk_t *pk );
-#endif
 
 #ifdef _RAINBOW_CYCLIC_COMPRESSED
 ///

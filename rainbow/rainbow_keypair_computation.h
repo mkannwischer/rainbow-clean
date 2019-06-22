@@ -11,7 +11,6 @@
 
 #include "rainbow_keypair.h"
 
-#if defined _RAINBOW_CYCLIC || defined _RAINBOW_CLASSIC
 /// @brief The (internal use) public key for rainbow
 ///
 /// The (internal use) public key for rainbow. The public
@@ -54,8 +53,6 @@ void PQCLEAN_NAMESPACE_extcpk_to_pk( pk_t *pk, const ext_cpk_t *cpk );
 /// @param[in]  Ts       - parts of the secret key: T1, T4, T3
 ///
 void PQCLEAN_NAMESPACE_calculate_Q_from_F( ext_cpk_t *Qs, const sk_t *Fs, const sk_t *Ts );
-
-#endif
 
 
 #if defined(_RAINBOW_CYCLIC) || defined(_RAINBOW_CYCLIC_COMPRESSED)

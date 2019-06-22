@@ -136,7 +136,7 @@ void PQCLEAN_NAMESPACE_generate_keypair( pk_t *rpk, sk_t *sk, const unsigned cha
 #endif
 
 
-#if defined _RAINBOW_CYCLIC
+#if defined _RAINBOW_CYCLIC || defined _RAINBOW_CYCLIC_COMPRESSED
 /////////////////////   Cyclic   //////////////////////////////////
 void PQCLEAN_NAMESPACE_generate_keypair_cyclic( cpk_t *pk, sk_t *sk, const unsigned char *pk_seed, const unsigned char *sk_seed ) {
     memcpy( pk->pk_seed, pk_seed, LEN_PKSEED );

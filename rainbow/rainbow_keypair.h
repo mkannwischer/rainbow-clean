@@ -96,7 +96,7 @@ struct rainbow_secretkey_cyclic {
 void PQCLEAN_NAMESPACE_generate_keypair( pk_t *pk, sk_t *sk, const unsigned char *sk_seed );
 #endif
 
-#if defined _RAINBOW_CYCLIC
+#if defined _RAINBOW_CYCLIC || defined _RAINBOW_CYCLIC_COMPRESSED
 ///
 /// @brief Generate key pairs for cyclic rainbow.
 ///

@@ -18,7 +18,6 @@
 #define _MAX_O  ((_O1>_O2)?_O1:_O2)
 #define _MAX_O_BYTE  ((_O1_BYTE>_O2_BYTE)?_O1_BYTE:_O2_BYTE)
 
-#if defined(_RAINBOW_CLASSIC) || defined(_RAINBOW_CYCLIC)
 int PQCLEAN_NAMESPACE_rainbow_sign( uint8_t *signature, const sk_t *sk, const uint8_t *_digest ) {
     uint8_t mat_l1[_O1 * _O1_BYTE];
     uint8_t mat_l2[_O2 * _O2_BYTE];
@@ -167,7 +166,6 @@ int PQCLEAN_NAMESPACE_rainbow_verify( const uint8_t *digest, const uint8_t *sign
     }
     return (0 == cc) ? 0 : -1;
 }
-#endif
 
 #ifdef _RAINBOW_CYCLIC_COMPRESSED
 ///////////////  cyclic version  ///////////////////////////
