@@ -4,14 +4,19 @@ import subprocess
 from pathlib import Path
 TARGET_FOLDER = "../PQClean/crypto_sign/"
 
-ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW_CLASSIC',
+ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW256_68_36_36', '_RAINBOW_CLASSIC',
        '_RAINBOW_CYCLIC', '_RAINBOW_CYCLIC_COMPRESSED']
 params = [
     {'name': 'rainbowIa-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_32_32_32', '_HASH_LEN=32']},
     {'name': 'rainbowIa-cyclic', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
     {'name': 'rainbowIa-cyclic-compressed', 'def' :['_RAINBOW_CYCLIC_COMPRESSED','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
+    {'name': 'rainbowIIIc-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
+    {'name': 'rainbowIIIc-cyclic', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
+    {'name': 'rainbowIIIc-cyclic-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
+    {'name': 'rainbowVc-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
+    {'name': 'rainbowVc-cyclic', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
+    {'name': 'rainbowVc-cyclic-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
 ]
-
 for param in params:
     parameterSet = param['name']
     pqcleanDir = f"{TARGET_FOLDER}/{parameterSet}/clean/"
