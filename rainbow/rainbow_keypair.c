@@ -140,7 +140,7 @@ void PQCLEAN_NAMESPACE_generate_keypair( pk_t *rpk, sk_t *sk, const unsigned cha
 /////////////////////   Cyclic   //////////////////////////////////
 void PQCLEAN_NAMESPACE_generate_keypair_cyclic( cpk_t *pk, sk_t *sk, const unsigned char *pk_seed, const unsigned char *sk_seed ) {
     memcpy( pk->pk_seed, pk_seed, LEN_PKSEED );
-    memcpy( sk->sk_seed , sk_seed , LEN_SKSEED );
+    memcpy( sk->sk_seed, sk_seed, LEN_SKSEED );
 
     // prng for sk
     prng_t prng;
@@ -166,10 +166,10 @@ void PQCLEAN_NAMESPACE_generate_keypair_cyclic( cpk_t *pk, sk_t *sk, const unsig
 
 
     unsigned char t4[sizeof(sk->t4)];
-    memcpy( t4 , sk->t4 , _V1_BYTE*_O2 );        // temporarily store t4
+    memcpy( t4, sk->t4, _V1_BYTE * _O2 );        // temporarily store t4
     memcpy( sk->t4, t2, _V1_BYTE * _O2 );        // restore t2
     PQCLEAN_NAMESPACE_calculate_Q_from_F_cyclic( pk, sk, sk );     // calculate the rest parts of public key: l1_Q3, l1_Q5, l1_Q6, l1_Q9, l2_Q9
-    memcpy( sk->t4 , t4 , _V1_BYTE*_O2 );        // restore t4
+    memcpy( sk->t4, t4, _V1_BYTE * _O2 );        // restore t4
 
     obsfucate_l1_polys( pk->l1_Q3, Qs->l2_F3, _V1 * _O2, sk->s1 );
     obsfucate_l1_polys( pk->l1_Q5, Qs->l2_F5, N_TRIANGLE_TERMS(_O1), sk->s1 );
