@@ -24,4 +24,3 @@ void PQCLEAN_NAMESPACE_gf256v_madd_u32(uint8_t *accu_c, const uint8_t *a, uint8_
 #endif
 
 #endif // _BLAS_U32_H_
-

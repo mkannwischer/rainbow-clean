@@ -7,7 +7,6 @@
 #include "rainbow_config.h"
 #include <stdint.h>
 
-
 /// @brief set a vector to 0.
 ///
 /// @param[in,out]   b      - the vector b.
@@ -81,8 +80,6 @@ void PQCLEAN_NAMESPACE_gf16mat_prod(uint8_t *c, const uint8_t *matA, unsigned n_
 ///
 uint8_t PQCLEAN_NAMESPACE_gf256v_get_ele(const uint8_t *a, unsigned i);
 
-
-
 /// @brief check if a vector is 0.
 ///
 /// @param[in]   a          - the vector a.
@@ -90,7 +87,6 @@ uint8_t PQCLEAN_NAMESPACE_gf256v_get_ele(const uint8_t *a, unsigned i);
 /// @return  1(true) if a is 0. 0(false) else.
 ///
 unsigned PQCLEAN_NAMESPACE_gf256v_is_zero(const uint8_t *a, unsigned _num_byte);
-
 
 /// @brief polynomial multiplication:  c = a*b
 ///
@@ -100,7 +96,6 @@ unsigned PQCLEAN_NAMESPACE_gf256v_is_zero(const uint8_t *a, unsigned _num_byte);
 /// @param[in]  _num   - number of elements for the polynomials a and b.
 ///
 void PQCLEAN_NAMESPACE_gf256v_polymul(uint8_t *c, const uint8_t *a, const uint8_t *b, unsigned _num);
-
 
 /// @brief matrix-vector multiplication:  c = matA * b , in GF(256)
 ///
@@ -151,5 +146,4 @@ unsigned PQCLEAN_NAMESPACE_gf256mat_solve_linear_eq(uint8_t *sol, const uint8_t 
 unsigned PQCLEAN_NAMESPACE_gf256mat_inv(uint8_t *inv_a, const uint8_t *a, unsigned H, uint8_t *buffer);
 #endif
 
-#endif  // _BLAS_COMM_H_
-
+#endif // _BLAS_COMM_H_
