@@ -11,7 +11,9 @@
 #include <string.h>
 
 void PQCLEAN_NAMESPACE_gf256v_set_zero(uint8_t *b, unsigned int _num_byte) {
-    gf256v_add(b, b, _num_byte);
+  for(size_t i=0; i<_num_byte; i++){
+      b[i] = 0;
+  }
 }
 #ifdef _USE_GF16
 
