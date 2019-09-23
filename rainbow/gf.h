@@ -12,6 +12,7 @@ uint32_t PQCLEAN_NAMESPACE_gf16v_mul_u32(uint32_t a, uint8_t b);
 
 #ifdef _USE_GF16
 
+uint8_t PQCLEAN_NAMESPACE_gf16_mul(uint8_t a, uint8_t b);
 uint8_t PQCLEAN_NAMESPACE_gf16_is_nonzero(uint8_t a);
 uint8_t PQCLEAN_NAMESPACE_gf16_inv(uint8_t a);
 uint32_t PQCLEAN_NAMESPACE_gf16v_mul_u32_u32(uint32_t a, uint32_t b);

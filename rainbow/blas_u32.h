@@ -5,16 +5,17 @@
 ///
 
 #include "rainbow_config.h"
+#include <stddef.h>
 #include <stdint.h>
 
-void PQCLEAN_NAMESPACE_gf256v_predicated_add_u32(uint8_t *accu_b, uint8_t predicate, const uint8_t *a, unsigned int _num_byte);
-void PQCLEAN_NAMESPACE_gf256v_add_u32(uint8_t *accu_b, const uint8_t *a, unsigned int _num_byte);
+void PQCLEAN_NAMESPACE_gf256v_predicated_add_u32(uint8_t *accu_b, uint8_t predicate, const uint8_t *a, size_t _num_byte);
+void PQCLEAN_NAMESPACE_gf256v_add_u32(uint8_t *accu_b, const uint8_t *a, size_t _num_byte);
 
 #ifdef _USE_GF16
 
-void PQCLEAN_NAMESPACE_gf16v_madd_u32(uint8_t *accu_c, const uint8_t *a, uint8_t gf16_b, unsigned int _num_byte);
-void PQCLEAN_NAMESPACE_gf16v_mul_scalar_u32(uint8_t *a, uint8_t gf16_b, unsigned int _num_byte);
-uint8_t PQCLEAN_NAMESPACE_gf16v_dot_u32(const uint8_t *a, const uint8_t *b, unsigned int _num_byte);
+void PQCLEAN_NAMESPACE_gf16v_madd_u32(uint8_t *accu_c, const uint8_t *a, uint8_t gf16_b, size_t _num_byte);
+void PQCLEAN_NAMESPACE_gf16v_mul_scalar_u32(uint8_t *a, uint8_t gf16_b, size_t _num_byte);
+uint8_t PQCLEAN_NAMESPACE_gf16v_dot_u32(const uint8_t *a, const uint8_t *b, size_t _num_byte);
 
 #else
 
