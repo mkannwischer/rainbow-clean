@@ -72,7 +72,7 @@ static inline uint8_t gf16_mul_8(uint8_t a) {
 }
 
 // gf256 := gf16[X]/X^2+X+xy
-static inline uint8_t gf256_mul(uint8_t a, uint8_t b) {
+uint8_t PQCLEAN_NAMESPACE_gf256_mul(uint8_t a, uint8_t b) {
     uint8_t a0 = a & 15;
     uint8_t a1 = (a >> 4);
     uint8_t b0 = b & 15;
@@ -97,33 +97,13 @@ uint8_t PQCLEAN_NAMESPACE_gf256_inv(uint8_t a) {
     uint8_t a2 = gf256_squ(a);
     uint8_t a4 = gf256_squ(a2);
     uint8_t a8 = gf256_squ(a4);
-    uint8_t a4_2 = gf256_mul(a4, a2);
-    uint8_t a8_4_2 = gf256_mul(a4_2, a8);
+    uint8_t a4_2 = PQCLEAN_NAMESPACE_gf256_mul(a4, a2);
+    uint8_t a8_4_2 = PQCLEAN_NAMESPACE_gf256_mul(a4_2, a8);
     uint8_t a64_ = gf256_squ(a8_4_2);
     a64_ = gf256_squ(a64_);
     a64_ = gf256_squ(a64_);
-    uint8_t a64_2 = gf256_mul(a64_, a8_4_2);
+    uint8_t a64_2 = PQCLEAN_NAMESPACE_gf256_mul(a64_, a8_4_2);
     uint8_t a128_ = gf256_squ(a64_2);
-    return gf256_mul(a2, a128_);
-}
-
-static inline uint32_t gf4v_mul_3_u32(uint32_t a) {
-    uint32_t bit0 = a & 0x55555555;
-    uint32_t bit1 = a & 0xaaaaaaaa;
-    return (bit0 << 1) ^ bit0 ^ (bit1 >> 1);
-}
-static inline uint32_t gf16v_mul_8_u32(uint32_t a) {
-    uint32_t a1 = a & 0xcccccccc;
-    uint32_t a0 = (a << 2) & 0xcccccccc;
-    return gf4v_mul_2_u32(a0 ^ a1) | gf4v_mul_3_u32(a1 >> 2);
-}
-uint32_t PQCLEAN_NAMESPACE_gf256v_mul_u32(uint32_t a, uint8_t b) {
-    uint32_t axb0 = PQCLEAN_NAMESPACE_gf16v_mul_u32(a, b);
-    uint32_t axb1 = PQCLEAN_NAMESPACE_gf16v_mul_u32(a, b >> 4);
-    uint32_t a0b1 = (axb1 << 4) & 0xf0f0f0f0;
-    uint32_t a1b1 = axb1 & 0xf0f0f0f0;
-    uint32_t a1b1_4 = a1b1 >> 4;
-
-    return axb0 ^ a0b1 ^ a1b1 ^ gf16v_mul_8_u32(a1b1_4);
+    return PQCLEAN_NAMESPACE_gf256_mul(a2, a128_);
 }
 #endif
