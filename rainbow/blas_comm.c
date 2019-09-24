@@ -49,7 +49,7 @@ static void gf16mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned int n_A_v
     PQCLEAN_NAMESPACE_gf256v_set_zero(c, n_A_vec_byte);
     for (unsigned int i = 0; i < n_A_width; i++) {
         uint8_t bb = PQCLEAN_NAMESPACE_gf16v_get_ele(b, i);
-        gf16v_madd(c, matA, bb, n_A_vec_byte);
+        PQCLEAN_NAMESPACE_gf16v_madd(c, matA, bb, n_A_vec_byte);
         matA += n_A_vec_byte;
     }
 }
@@ -61,7 +61,7 @@ void PQCLEAN_NAMESPACE_gf16mat_mul(uint8_t *c, const uint8_t *a, const uint8_t *
         const uint8_t *bk = b + n_vec_byte * k;
         for (unsigned int i = 0; i < len_vec; i++) {
             uint8_t bb = PQCLEAN_NAMESPACE_gf16v_get_ele(bk, i);
-            gf16v_madd(c, a + n_vec_byte * i, bb, n_vec_byte);
+            PQCLEAN_NAMESPACE_gf16v_madd(c, a + n_vec_byte * i, bb, n_vec_byte);
         }
         c += n_vec_byte;
     }
@@ -75,19 +75,19 @@ static unsigned int gf16mat_gauss_elim_ref(uint8_t *mat, unsigned int h, unsigne
         uint8_t *ai = mat + n_w_byte * i;
         for (unsigned int j = i + 1; j < h; j++) {
             uint8_t *aj = mat + n_w_byte * j;
-            gf256v_predicated_add(ai + offset_byte, !PQCLEAN_NAMESPACE_gf16_is_nonzero(PQCLEAN_NAMESPACE_gf16v_get_ele(ai, i)), aj + offset_byte, n_w_byte - offset_byte);
+            PQCLEAN_NAMESPACE_gf256v_predicated_add(ai + offset_byte, !PQCLEAN_NAMESPACE_gf16_is_nonzero(PQCLEAN_NAMESPACE_gf16v_get_ele(ai, i)), aj + offset_byte, n_w_byte - offset_byte);
         }
         uint8_t pivot = PQCLEAN_NAMESPACE_gf16v_get_ele(ai, i);
         r8 &= PQCLEAN_NAMESPACE_gf16_is_nonzero(pivot);
         pivot = PQCLEAN_NAMESPACE_gf16_inv(pivot);
         offset_byte = (i + 1) >> 1;
-        gf16v_mul_scalar(ai + offset_byte, pivot, n_w_byte - offset_byte);
+        PQCLEAN_NAMESPACE_gf16v_mul_scalar(ai + offset_byte, pivot, n_w_byte - offset_byte);
         for (unsigned int j = 0; j < h; j++) {
             if (i == j) {
                 continue;
             }
             uint8_t *aj = mat + n_w_byte * j;
-            gf16v_madd(aj + offset_byte, ai + offset_byte, PQCLEAN_NAMESPACE_gf16v_get_ele(aj, i), n_w_byte - offset_byte);
+            PQCLEAN_NAMESPACE_gf16v_madd(aj + offset_byte, ai + offset_byte, PQCLEAN_NAMESPACE_gf16v_get_ele(aj, i), n_w_byte - offset_byte);
         }
     }
     return r8;
@@ -125,7 +125,7 @@ unsigned int PQCLEAN_NAMESPACE_gf16mat_inv(uint8_t *inv_a, const uint8_t *a, uns
     for (unsigned int i = 0; i < H; i++) {
         uint8_t *ai = aa + i * 2 * n_w_byte;
         PQCLEAN_NAMESPACE_gf256v_set_zero(ai, 2 * n_w_byte);
-        gf256v_add(ai, a + i * n_w_byte, n_w_byte);
+        PQCLEAN_NAMESPACE_gf256v_add(ai, a + i * n_w_byte, n_w_byte);
         PQCLEAN_NAMESPACE_gf16v_set_ele(ai + n_w_byte, i, 1);
     }
     unsigned int r8 = PQCLEAN_NAMESPACE_gf16mat_gauss_elim(aa, H, 2 * H);
@@ -157,14 +157,14 @@ unsigned int PQCLEAN_NAMESPACE_gf256v_is_zero(const uint8_t *a, unsigned int _nu
 void PQCLEAN_NAMESPACE_gf256v_polymul(uint8_t *c, const uint8_t *a, const uint8_t *b, unsigned int _num) {
     PQCLEAN_NAMESPACE_gf256v_set_zero(c, _num * 2 - 1);
     for (unsigned int i = 0; i < _num; i++) {
-        gf256v_madd(c + i, a, b[i], _num);
+        PQCLEAN_NAMESPACE_gf256v_madd(c + i, a, b[i], _num);
     }
 }
 
 static void gf256mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned int n_A_vec_byte, unsigned int n_A_width, const uint8_t *b) {
     PQCLEAN_NAMESPACE_gf256v_set_zero(c, n_A_vec_byte);
     for (unsigned int i = 0; i < n_A_width; i++) {
-        gf256v_madd(c, matA, b[i], n_A_vec_byte);
+        PQCLEAN_NAMESPACE_gf256v_madd(c, matA, b[i], n_A_vec_byte);
         matA += n_A_vec_byte;
     }
 }
@@ -175,7 +175,7 @@ void PQCLEAN_NAMESPACE_gf256mat_mul(uint8_t *c, const uint8_t *a, const uint8_t 
         PQCLEAN_NAMESPACE_gf256v_set_zero(c, n_vec_byte);
         const uint8_t *bk = b + n_vec_byte * k;
         for (unsigned int i = 0; i < len_vec; i++) {
-            gf256v_madd(c, a + n_vec_byte * i, bk[i], n_vec_byte);
+            PQCLEAN_NAMESPACE_gf256v_madd(c, a + n_vec_byte * i, bk[i], n_vec_byte);
         }
         c += n_vec_byte;
     }
@@ -190,18 +190,18 @@ static unsigned int gf256mat_gauss_elim_ref(uint8_t *mat, unsigned int h, unsign
 
         for (unsigned int j = i + 1; j < h; j++) {
             uint8_t *aj = mat + w * j;
-            gf256v_predicated_add(ai + skip_len_align4, !PQCLEAN_NAMESPACE_gf256_is_nonzero(ai[i]), aj + skip_len_align4, w - skip_len_align4);
+            PQCLEAN_NAMESPACE_gf256v_predicated_add(ai + skip_len_align4, !PQCLEAN_NAMESPACE_gf256_is_nonzero(ai[i]), aj + skip_len_align4, w - skip_len_align4);
         }
         r8 &= PQCLEAN_NAMESPACE_gf256_is_nonzero(ai[i]);
         uint8_t pivot = ai[i];
         pivot = PQCLEAN_NAMESPACE_gf256_inv(pivot);
-        gf256v_mul_scalar(ai + skip_len_align4, pivot, w - skip_len_align4);
+        PQCLEAN_NAMESPACE_gf256v_mul_scalar(ai + skip_len_align4, pivot, w - skip_len_align4);
         for (unsigned int j = 0; j < h; j++) {
             if (i == j) {
                 continue;
             }
             uint8_t *aj = mat + w * j;
-            gf256v_madd(aj + skip_len_align4, ai + skip_len_align4, aj[i], w - skip_len_align4);
+            PQCLEAN_NAMESPACE_gf256v_madd(aj + skip_len_align4, ai + skip_len_align4, aj[i], w - skip_len_align4);
         }
     }
 
@@ -234,7 +234,7 @@ unsigned int PQCLEAN_NAMESPACE_gf256mat_inv(uint8_t *inv_a, const uint8_t *a, un
     for (unsigned int i = 0; i < H; i++) {
         uint8_t *ai = aa + i * 2 * H;
         PQCLEAN_NAMESPACE_gf256v_set_zero(ai, 2 * H);
-        gf256v_add(ai, a + i * H, H);
+        PQCLEAN_NAMESPACE_gf256v_add(ai, a + i * H, H);
         ai[H + i] = 1;
     }
     unsigned int r8 = PQCLEAN_NAMESPACE_gf256mat_gauss_elim(aa, H, 2 * H);

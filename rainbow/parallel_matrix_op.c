@@ -41,9 +41,9 @@ void PQCLEAN_NAMESPACE_UpperTrianglize(unsigned char *btriC, const unsigned char
     for (unsigned int i = 0; i < Aheight; i++) {
         for (unsigned int j = 0; j < i; j++) {
             unsigned int idx = PQCLEAN_NAMESPACE_idx_of_trimat(j, i, Aheight);
-            gf256v_add(btriC + idx * size_batch, bA + size_batch * (i * Awidth + j), size_batch);
+            PQCLEAN_NAMESPACE_gf256v_add(btriC + idx * size_batch, bA + size_batch * (i * Awidth + j), size_batch);
         }
-        gf256v_add(runningC, bA + size_batch * (i * Awidth + i), size_batch * (Aheight - i));
+        PQCLEAN_NAMESPACE_gf256v_add(runningC, bA + size_batch * (i * Awidth + i), size_batch * (Aheight - i));
         runningC += size_batch * (Aheight - i);
     }
 }
@@ -59,7 +59,7 @@ void PQCLEAN_NAMESPACE_batch_trimat_madd_gf16(unsigned char *bC, const unsigned 
                 if (k < i) {
                     continue;
                 }
-                gf16v_madd(bC, &btriA[(k - i) * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf16v_madd(bC, &btriA[(k - i) * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -76,7 +76,7 @@ void PQCLEAN_NAMESPACE_batch_trimatTr_madd_gf16(unsigned char *bC, const unsigne
                 if (i < k) {
                     continue;
                 }
-                gf16v_madd(bC, &btriA[size_batch * (PQCLEAN_NAMESPACE_idx_of_trimat(k, i, Aheight))], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf16v_madd(bC, &btriA[size_batch * (PQCLEAN_NAMESPACE_idx_of_trimat(k, i, Aheight))], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -92,7 +92,7 @@ void PQCLEAN_NAMESPACE_batch_2trimat_madd_gf16(unsigned char *bC, const unsigned
                 if (i == k) {
                     continue;
                 }
-                gf16v_madd(bC, &btriA[size_batch * (idx_of_2trimat(i, k, Aheight))], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf16v_madd(bC, &btriA[size_batch * (idx_of_2trimat(i, k, Aheight))], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -105,7 +105,7 @@ void PQCLEAN_NAMESPACE_batch_matTr_madd_gf16(unsigned char *bC, const unsigned c
     unsigned int Atr_width = Aheight;
     for (unsigned int i = 0; i < Atr_height; i++) {
         for (unsigned int j = 0; j < Atr_width; j++) {
-            gf16v_madd(bC, &bB[j * Bwidth * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&A_to_tr[size_Acolvec * i], j), size_batch * Bwidth);
+            PQCLEAN_NAMESPACE_gf16v_madd(bC, &bB[j * Bwidth * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&A_to_tr[size_Acolvec * i], j), size_batch * Bwidth);
         }
         bC += size_batch * Bwidth;
     }
@@ -118,7 +118,7 @@ void PQCLEAN_NAMESPACE_batch_bmatTr_madd_gf16(unsigned char *bC, const unsigned 
     for (unsigned int i = 0; i < Aheight; i++) {
         for (unsigned int j = 0; j < Bwidth; j++) {
             for (unsigned int k = 0; k < Bheight; k++) {
-                gf16v_madd(bC, &bA[size_batch * (i + k * Aheight)], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf16v_madd(bC, &bA[size_batch * (i + k * Aheight)], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -131,7 +131,7 @@ void PQCLEAN_NAMESPACE_batch_mat_madd_gf16(unsigned char *bC, const unsigned cha
     for (unsigned int i = 0; i < Aheight; i++) {
         for (unsigned int j = 0; j < Bwidth; j++) {
             for (unsigned int k = 0; k < Bheight; k++) {
-                gf16v_madd(bC, &bA[k * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf16v_madd(bC, &bA[k * size_batch], PQCLEAN_NAMESPACE_gf16v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -156,10 +156,10 @@ void PQCLEAN_NAMESPACE_batch_quad_recmat_eval_gf16(unsigned char *z, const unsig
     for (unsigned int i = 0; i < dim_y; i++) {
         PQCLEAN_NAMESPACE_gf256v_set_zero(tmp, size_batch);
         for (unsigned int j = 0; j < dim_x; j++) {
-            gf16v_madd(tmp, mat, _x[j], size_batch);
+            PQCLEAN_NAMESPACE_gf16v_madd(tmp, mat, _x[j], size_batch);
             mat += size_batch;
         }
-        gf16v_madd(z, tmp, _y[i], size_batch);
+        PQCLEAN_NAMESPACE_gf16v_madd(z, tmp, _y[i], size_batch);
     }
 }
 
@@ -175,10 +175,10 @@ void PQCLEAN_NAMESPACE_batch_quad_trimat_eval_gf16(unsigned char *y, const unsig
     for (unsigned int i = 0; i < dim; i++) {
         PQCLEAN_NAMESPACE_gf256v_set_zero(tmp, size_batch);
         for (unsigned int j = i; j < dim; j++) {
-            gf16v_madd(tmp, trimat, _x[j], size_batch);
+            PQCLEAN_NAMESPACE_gf16v_madd(tmp, trimat, _x[j], size_batch);
             trimat += size_batch;
         }
-        gf16v_madd(y, tmp, _x[i], size_batch);
+        PQCLEAN_NAMESPACE_gf16v_madd(y, tmp, _x[i], size_batch);
     }
 }
 #else
@@ -192,7 +192,7 @@ void PQCLEAN_NAMESPACE_batch_trimat_madd_gf256(unsigned char *bC, const unsigned
                 if (k < i) {
                     continue;
                 }
-                gf256v_madd(bC, &btriA[(k - i) * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf256v_madd(bC, &btriA[(k - i) * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -209,7 +209,7 @@ void PQCLEAN_NAMESPACE_batch_trimatTr_madd_gf256(unsigned char *bC, const unsign
                 if (i < k) {
                     continue;
                 }
-                gf256v_madd(bC, &btriA[size_batch * (PQCLEAN_NAMESPACE_idx_of_trimat(k, i, Aheight))], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf256v_madd(bC, &btriA[size_batch * (PQCLEAN_NAMESPACE_idx_of_trimat(k, i, Aheight))], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -225,7 +225,7 @@ void PQCLEAN_NAMESPACE_batch_2trimat_madd_gf256(unsigned char *bC, const unsigne
                 if (i == k) {
                     continue;
                 }
-                gf256v_madd(bC, &btriA[size_batch * (idx_of_2trimat(i, k, Aheight))], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf256v_madd(bC, &btriA[size_batch * (idx_of_2trimat(i, k, Aheight))], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -238,7 +238,7 @@ void PQCLEAN_NAMESPACE_batch_matTr_madd_gf256(unsigned char *bC, const unsigned 
     unsigned int Atr_width = Aheight;
     for (unsigned int i = 0; i < Atr_height; i++) {
         for (unsigned int j = 0; j < Atr_width; j++) {
-            gf256v_madd(bC, &bB[j * Bwidth * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&A_to_tr[size_Acolvec * i], j), size_batch * Bwidth);
+            PQCLEAN_NAMESPACE_gf256v_madd(bC, &bB[j * Bwidth * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&A_to_tr[size_Acolvec * i], j), size_batch * Bwidth);
         }
         bC += size_batch * Bwidth;
     }
@@ -251,7 +251,7 @@ void PQCLEAN_NAMESPACE_batch_bmatTr_madd_gf256(unsigned char *bC, const unsigned
     for (unsigned int i = 0; i < Aheight; i++) {
         for (unsigned int j = 0; j < Bwidth; j++) {
             for (unsigned int k = 0; k < Bheight; k++) {
-                gf256v_madd(bC, &bA[size_batch * (i + k * Aheight)], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf256v_madd(bC, &bA[size_batch * (i + k * Aheight)], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -264,7 +264,7 @@ void PQCLEAN_NAMESPACE_batch_mat_madd_gf256(unsigned char *bC, const unsigned ch
     for (unsigned int i = 0; i < Aheight; i++) {
         for (unsigned int j = 0; j < Bwidth; j++) {
             for (unsigned int k = 0; k < Bheight; k++) {
-                gf256v_madd(bC, &bA[k * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
+                PQCLEAN_NAMESPACE_gf256v_madd(bC, &bA[k * size_batch], PQCLEAN_NAMESPACE_gf256v_get_ele(&B[j * size_Bcolvec], k), size_batch);
             }
             bC += size_batch;
         }
@@ -284,10 +284,10 @@ void PQCLEAN_NAMESPACE_batch_quad_trimat_eval_gf256(unsigned char *y, const unsi
     for (unsigned int i = 0; i < dim; i++) {
         PQCLEAN_NAMESPACE_gf256v_set_zero(tmp, size_batch);
         for (unsigned int j = i; j < dim; j++) {
-            gf256v_madd(tmp, trimat, _x[j], size_batch);
+            PQCLEAN_NAMESPACE_gf256v_madd(tmp, trimat, _x[j], size_batch);
             trimat += size_batch;
         }
-        gf256v_madd(y, tmp, _x[i], size_batch);
+        PQCLEAN_NAMESPACE_gf256v_madd(y, tmp, _x[i], size_batch);
     }
 }
 
@@ -308,10 +308,10 @@ void PQCLEAN_NAMESPACE_batch_quad_recmat_eval_gf256(unsigned char *z, const unsi
     for (unsigned int i = 0; i < dim_y; i++) {
         PQCLEAN_NAMESPACE_gf256v_set_zero(tmp, size_batch);
         for (unsigned int j = 0; j < dim_x; j++) {
-            gf256v_madd(tmp, mat, _x[j], size_batch);
+            PQCLEAN_NAMESPACE_gf256v_madd(tmp, mat, _x[j], size_batch);
             mat += size_batch;
         }
-        gf256v_madd(z, tmp, _y[i], size_batch);
+        PQCLEAN_NAMESPACE_gf256v_madd(z, tmp, _y[i], size_batch);
     }
 }
 
