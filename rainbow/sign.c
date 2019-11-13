@@ -72,7 +72,7 @@ int PQCLEAN_NAMESPACE_crypto_sign_open(unsigned char *m, size_t *mlen, const uns
         #endif
     }
     if (!rc) {
-        memcpy(m, sm, smlen - _SIGNATURE_BYTE);
+        memmove(m, sm, smlen - _SIGNATURE_BYTE);
     } else { // bad signature
         *mlen = (size_t) -1;
         memset(m, 0, smlen);
