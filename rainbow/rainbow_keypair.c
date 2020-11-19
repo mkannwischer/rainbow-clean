@@ -32,7 +32,6 @@ void generate_S_T( unsigned char * s_and_t , prng_t * prng0 )
 
     size = sizeof(_sk->t3);
     PQCLEAN_NAMESPACE_prng_gen( prng0 , s_and_t , size );
-    s_and_t += size;
 }
 
 
@@ -50,7 +49,6 @@ unsigned generate_l1_F12( unsigned char * sk, prng_t * prng0 )
 
     size = sizeof(_sk->l1_F2);
     PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
-    sk += size;
     n_byte_generated += size;
 
     return n_byte_generated;
@@ -86,7 +84,6 @@ unsigned generate_l2_F12356( unsigned char * sk, prng_t * prng0 )
 
     size = sizeof(_sk->l2_F6);
     PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
-    sk += size;
     n_byte_generated += size;
 
     return n_byte_generated;
@@ -123,7 +120,7 @@ static void obsfucate_l1_polys(unsigned char *l1_polys, const unsigned char *l2_
 ///////////////////  Classic //////////////////////////////////
 
 #if defined _RAINBOW_CLASSIC
-static void _generate_secretkey(sk_t *sk, const unsigned char *sk_seed) {
+static void generate_secretkey(sk_t *sk, const unsigned char *sk_seed) {
     memcpy(sk->sk_seed, sk_seed, LEN_SKSEED);
 
     // set up prng
@@ -139,7 +136,7 @@ static void _generate_secretkey(sk_t *sk, const unsigned char *sk_seed) {
 }
 
 void PQCLEAN_NAMESPACE_generate_keypair(pk_t *rpk, sk_t *sk, const unsigned char *sk_seed) {
-    _generate_secretkey(sk, sk_seed);
+    generate_secretkey(sk, sk_seed);
 
     // set up a temporary structure ext_cpk_t for calculating public key.
     ext_cpk_t pk;

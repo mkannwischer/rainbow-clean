@@ -7,7 +7,7 @@
 #include "rainbow_config.h"
 #include "sha2.h"
 
-static inline int _hash(unsigned char *digest, const unsigned char *m, size_t mlen) {
+static inline int h(unsigned char *digest, const unsigned char *m, size_t mlen) {
     #if 32 == _HASH_LEN
     sha256(digest, m, mlen);
     #elif 48 == _HASH_LEN
@@ -33,14 +33,14 @@ static inline int expand_hash(unsigned char *digest, size_t n_digest, const unsi
     n_digest -= _HASH_LEN;
 
     while (_HASH_LEN <= n_digest) {
-        _hash(digest + _HASH_LEN, digest, _HASH_LEN);
+        h(digest + _HASH_LEN, digest, _HASH_LEN);
 
         n_digest -= _HASH_LEN;
         digest += _HASH_LEN;
     }
     unsigned char temp[_HASH_LEN];
     if (n_digest) {
-        _hash(temp, digest, _HASH_LEN);
+        h(temp, digest, _HASH_LEN);
         for (size_t i = 0; i < n_digest; i++) {
             digest[_HASH_LEN + i] = temp[i];
         }
@@ -53,6 +53,6 @@ int PQCLEAN_NAMESPACE_hash_msg(unsigned char *digest,
                                const unsigned char *m,
                                size_t mlen) {
     unsigned char buf[_HASH_LEN];
-    _hash(buf, m, mlen);
+    h(buf, m, mlen);
     return expand_hash(digest, len_digest, buf);
 }
