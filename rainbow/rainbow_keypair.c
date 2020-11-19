@@ -12,51 +12,86 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void generate_S_T(unsigned char *s_and_t, prng_t *prng0) {
-    PQCLEAN_NAMESPACE_prng_gen(prng0, s_and_t, _O1_BYTE * _O2); // S1
-    s_and_t += _O1_BYTE * _O2;
-    PQCLEAN_NAMESPACE_prng_gen(prng0, s_and_t, _V1_BYTE * _O1); // T1
-    s_and_t += _V1_BYTE * _O1;
-    PQCLEAN_NAMESPACE_prng_gen(prng0, s_and_t, _V1_BYTE * _O2); // T2
-    s_and_t += _V1_BYTE * _O2;
-    PQCLEAN_NAMESPACE_prng_gen(prng0, s_and_t, _O1_BYTE * _O2); // T3
+static
+void generate_S_T( unsigned char * s_and_t , prng_t * prng0 )
+{
+    sk_t * _sk;
+    unsigned size;
+
+    size = sizeof(_sk->s1);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , s_and_t , size );
+    s_and_t += size;
+
+    size = sizeof(_sk->t1);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , s_and_t , size );
+    s_and_t += size;
+
+    size = sizeof(_sk->t4);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , s_and_t , size );
+    s_and_t += size;
+
+    size = sizeof(_sk->t3);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , s_and_t , size );
+    s_and_t += size;
 }
 
-static unsigned int generate_l1_F12(unsigned char *sk, prng_t *prng0) {
-    unsigned int n_byte_generated = 0;
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O1_BYTE * N_TRIANGLE_TERMS(_V1)); // l1_F1
-    sk += _O1_BYTE * N_TRIANGLE_TERMS(_V1);
-    n_byte_generated += _O1_BYTE * N_TRIANGLE_TERMS(_V1);
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O1_BYTE * _V1 * _O1); // l1_F2
-    n_byte_generated += _O1_BYTE * _V1 * _O1;
+static
+unsigned generate_l1_F12( unsigned char * sk, prng_t * prng0 )
+{
+    unsigned n_byte_generated = 0;
+    sk_t * _sk;
+    unsigned size;
+
+    size = sizeof(_sk->l1_F1);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
+
+    size = sizeof(_sk->l1_F2);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
+
     return n_byte_generated;
 }
 
-static unsigned int generate_l2_F12356(unsigned char *sk, prng_t *prng0) {
-    unsigned int n_byte_generated = 0;
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O2_BYTE * N_TRIANGLE_TERMS(_V1)); // l2_F1
-    sk += _O2_BYTE * N_TRIANGLE_TERMS(_V1);
-    n_byte_generated += _O2_BYTE * N_TRIANGLE_TERMS(_V1);
+static
+unsigned generate_l2_F12356( unsigned char * sk, prng_t * prng0 )
+{
+    unsigned n_byte_generated = 0;
+    sk_t * _sk;
+    unsigned size;
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O2_BYTE * _V1 * _O1); // l2_F2
-    sk += _O2_BYTE * _V1 * _O1;
-    n_byte_generated += _O2_BYTE * _V1 * _O1;
+    size = sizeof(_sk->l2_F1);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O2_BYTE * _V1 * _O2); // l2_F3
-    sk += _O2_BYTE * _V1 * _O1;
-    n_byte_generated += _O2_BYTE * _V1 * _O1;
+    size = sizeof(_sk->l2_F2);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O2_BYTE * N_TRIANGLE_TERMS(_O1)); // l2_F5
-    sk += _O2_BYTE * N_TRIANGLE_TERMS(_O1);
-    n_byte_generated += _O2_BYTE * N_TRIANGLE_TERMS(_O1);
+    size = sizeof(_sk->l2_F3);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
 
-    PQCLEAN_NAMESPACE_prng_gen(prng0, sk, _O2_BYTE * _O1 * _O2); // l2_F6
-    n_byte_generated += _O2_BYTE * _O1 * _O2;
+    size = sizeof(_sk->l2_F5);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
+
+    size = sizeof(_sk->l2_F6);
+    PQCLEAN_NAMESPACE_prng_gen( prng0 , sk , size );
+    sk += size;
+    n_byte_generated += size;
 
     return n_byte_generated;
 }
+
 
 static void generate_B1_B2(unsigned char *sk, prng_t *prng0) {
     sk += generate_l1_F12(sk, prng0);
