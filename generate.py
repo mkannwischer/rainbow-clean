@@ -4,8 +4,8 @@ import subprocess
 from pathlib import Path
 TARGET_FOLDER = "../PQClean/crypto_sign/"
 
-ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW256_68_36_36', '_RAINBOW_CLASSIC',
-       '_RAINBOW_CYCLIC', '_RAINBOW_CYCLIC_COMPRESSED']
+ALL = ['_USE_GF16', '_RAINBOW16_36_32_32', '_RAINBOW256_68_32_48', '_RAINBOW256_96_36_64',
+       '_RAINBOW_CLASSIC', '_RAINBOW_CYCLIC', '_RAINBOW_CYCLIC_COMPRESSED']
 params = [
     {'name': 'rainbowI-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_36_32_32', '_HASH_LEN=32']},
     {'name': 'rainbowI-circumzenithal', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_36_32_32','_HASH_LEN=32']},
