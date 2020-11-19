@@ -11,6 +11,7 @@
 #define _V1 36
 #define _O1 32
 #define _O2 32
+#define _MAX_O 32
 #define _HASH_LEN 32
 
 #elif defined _RAINBOW256_68_32_48
@@ -18,6 +19,7 @@
 #define _V1 68
 #define _O1 32
 #define _O2 48
+#define _MAX_O 48
 #define _HASH_LEN 48
 
 #elif defined _RAINBOW256_96_36_64
@@ -25,6 +27,7 @@
 #define _V1 96
 #define _O1 36
 #define _O2 64
+#define _MAX_O 64
 #define _HASH_LEN 64
 
 #else
