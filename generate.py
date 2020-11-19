@@ -7,15 +7,15 @@ TARGET_FOLDER = "../PQClean/crypto_sign/"
 ALL = ['_USE_GF16', '_RAINBOW16_32_32_32', '_RAINBOW256_68_36_36', '_RAINBOW_CLASSIC',
        '_RAINBOW_CYCLIC', '_RAINBOW_CYCLIC_COMPRESSED']
 params = [
-    {'name': 'rainbowI-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_32_32_32', '_HASH_LEN=32']},
-    {'name': 'rainbowI-circumzenithal', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
-    {'name': 'rainbowI-compressed', 'def' :['_RAINBOW_CYCLIC_COMPRESSED','_USE_GF16', '_RAINBOW16_32_32_32','_HASH_LEN=32']},
-    {'name': 'rainbowIII-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
-    {'name': 'rainbowIII-circumzenithal', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
-    {'name': 'rainbowIII-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_68_36_36', '_HASH_LEN=48']},
-    {'name': 'rainbowV-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
-    {'name': 'rainbowV-circumzenithal', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
-    {'name': 'rainbowV-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_92_48_48', '_HASH_LEN=64']},
+    {'name': 'rainbowI-classic', 'def' : ['_RAINBOW_CLASSIC', '_USE_GF16', '_RAINBOW16_36_32_32', '_HASH_LEN=32']},
+    {'name': 'rainbowI-circumzenithal', 'def' :['_RAINBOW_CYCLIC','_USE_GF16', '_RAINBOW16_36_32_32','_HASH_LEN=32']},
+    {'name': 'rainbowI-compressed', 'def' :['_RAINBOW_CYCLIC_COMPRESSED','_USE_GF16', '_RAINBOW16_36_32_32','_HASH_LEN=32']},
+    {'name': 'rainbowIII-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_68_32_48', '_HASH_LEN=48']},
+    {'name': 'rainbowIII-circumzenithal', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_68_32_48', '_HASH_LEN=48']},
+    {'name': 'rainbowIII-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_68_32_48', '_HASH_LEN=48']},
+    {'name': 'rainbowV-classic', 'def' : ['_RAINBOW_CLASSIC','_RAINBOW256_96_36_64', '_HASH_LEN=64']},
+    {'name': 'rainbowV-circumzenithal', 'def' : ['_RAINBOW_CYCLIC','_RAINBOW256_96_36_64', '_HASH_LEN=64']},
+    {'name': 'rainbowV-compressed', 'def' : ['_RAINBOW_CYCLIC_COMPRESSED','_RAINBOW256_96_36_64', '_HASH_LEN=64']},
 ]
 for param in params:
     parameterSet = param['name']
