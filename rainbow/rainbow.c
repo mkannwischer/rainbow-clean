@@ -65,7 +65,7 @@ int PQCLEAN_NAMESPACE_rainbow_sign(uint8_t *signature, const sk_t *sk, const uin
     uint8_t y[_PUB_M_BYTE];
     uint8_t *x_v1 = vinegar;
     uint8_t x_o1[_O1_BYTE];
-    uint8_t x_o2[_O1_BYTE];
+    uint8_t x_o2[_O2_BYTE];
 
     uint8_t digest_salt[_HASH_LEN + _SALT_BYTE];
     memcpy(digest_salt, _digest, _HASH_LEN);
